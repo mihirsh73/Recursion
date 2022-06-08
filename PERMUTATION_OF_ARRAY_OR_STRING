@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void find(vector<int> nums, vector<vector<int>> &res, int ind)
+    {
+       if(ind==nums.size())
+       {
+           res.push_back(nums);
+           return;
+       }
+        for(int i=ind; i<nums.size(); i++)  // TC (N*N!) SC O(N)
+        {
+         swap(nums[i],nums[ind]);
+            find(nums,res,ind+1);
+            swap(nums[i],nums[ind]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        find(nums,res,0);
+        return res;
+        
+    }
+};
