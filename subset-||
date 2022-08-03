@@ -1,0 +1,38 @@
+
+Given an array of integers that may contain duplicates the task is to return all possible subsets. Return only unique subsets and they can be in any order.
+void fun(vector < int > & nums, int index, vector < int > ds, set < vector < int >> & res) {
+      if (index == nums.size()) {
+        sort(ds.begin(), ds.end());
+        res.insert(ds);
+        return;
+      }
+      ds.push_back(nums[index]);
+      fun(nums, index + 1, ds, res);
+      ds.pop_back();
+      fun(nums, index + 1, ds, res);
+    }
+  vector < vector < int >> subsetsWithDup(vector < int > & nums) {
+    vector < vector < int >> ans;
+    set < vector < int >> res;
+    vector < int > ds;
+    fun(nums, 0, ds, res);
+    for (auto it = res.begin(); it != res.end(); it++) {
+      ans.push_back( * it);
+    }
+    return ans;
+  }
+};
+int main() {
+  Solution obj;
+  vector < int > nums = {1, 2, 2};
+  vector < vector < int >> ans = obj.subsetsWithDup(nums);
+  printAns(ans);
+  return 0;
+}
+The unique subsets are
+[ [ ][ 1 ][ 1 2 ][ 1 2 2 ][ 2 ][ 2 2 ] ]
+
+
+Time Complexity: O(2^n)+O(2^n log(2^n)). Each index has two ways. You can either pick it up or not pick it. So for n index time complexity for O(2^n) and for sorting it will take (2^n log(2^n)).
+
+Space Complexity: O(2^n) for storing subset sums, since 2^n subsets can be generated for an array of size n.
